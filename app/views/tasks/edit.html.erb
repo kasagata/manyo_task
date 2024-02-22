@@ -1,0 +1,18 @@
+<h1>Edit Task Page</h1>
+<%= form_with(model: @task, local: true) do |form| %>
+    <div class="field">
+      <%= form.label :title %><br>
+      <%= form.text_field :title %>
+    </div>
+  
+    <div class="field">
+      <%= form.label :content %><br>
+      <%= form.text_area :content %>
+    </div>
+  
+    <div class="actions", id:"update-task">
+      <%= form.submit %>
+    </div>
+<% end %>
+  
+<%= link_to t('Back'), tasks_path, id:"back" %>
