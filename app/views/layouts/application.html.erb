@@ -11,8 +11,8 @@
 
   <body>
     <ul>
-      <li><%= link_to "Tasks Index", root_path, id:"tasks-index" %></li>
-      <li><%= link_to "New Task", new_task_path, id:"new-task" %></li>
+      <li><%= link_to t('common.tasks_index'), root_path, id:"tasks-index" %></li>
+      <li><%= link_to t('common.new_task'), new_task_path, id:"new-task" %></li>
     </ul>
     <% flash.each do |key, value| %>
       <%= content_tag(:div, value, class: "#{key}") %>
