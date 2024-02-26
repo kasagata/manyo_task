@@ -31,8 +31,8 @@ jobs:
       - name: Set up Node
         uses: actions/setup-node@v2
         with:
-          node-version: '20'
-          check-latest: true
+          node-version: '20.9.0'
+          check-latest: false
       - name: Install Yarn
         run: yarn --frozen-lockfile
       - name: Create Evaluation File
