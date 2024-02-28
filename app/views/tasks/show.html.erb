@@ -21,12 +21,12 @@
 
 <p>
   <strong><%= Task.human_attribute_name(:priority) %>:</strong>
-  <%= @task.priority %>
+  <%= @task.priority_i18n %>
 </p>
 
 <p>
   <strong><%= Task.human_attribute_name(:status) %>:</strong>
-  <%= @task.status %>
+  <%= @task.status_i18n %>
 </p>
 
 <%= link_to t('common.edit'), edit_task_path(@task), id:"edit-task" %> |
