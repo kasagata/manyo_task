@@ -31,29 +31,32 @@ RSpec.describe 'タスクモデル機能', type: :model do
     context 'scopeメソッドでタイトルのあいまい検索をした場合' do
       it "検索ワードを含むタスクが絞り込まれる" do
         # toとnot_toのマッチャを使って検索されたものとされなかったものの両方を確認する
-        expect(Task.search_title('first')).to include(task1)
-        expect(Task.search_title('first')).not_to include(task2)
+        result = Task.search_title('first')
+        expect(result).to include(task1)
+        expect(result).not_to include(task2)
         # 検索されたテストデータの数を確認する
-        expect(Task.search_title('first').size).to eq 1
+        expect(result.size).to eq 1
 
       end
     end
     context 'scopeメソッドでステータス検索をした場合' do
       it "ステータスに完全一致するタスクが絞り込まれる" do
         # toとnot_toのマッチャを使って検索されたものとされなかったものの両方を確認する
-        expect(Task.search_status(0)).to include(task1)
-        expect(Task.search_status(0)).not_to include(task2)
+        result = Task.search_status(0)
+        expect(result).to include(task1)
+        expect(result).not_to include(task2)
         # 検索されたテストデータの数を確認する
-        expect(Task.search_status(0).size).to eq 1
+        expect(result.size).to eq 1
       end
     end
     context 'scopeメソッドでタイトルのあいまい検索とステータス検索をした場合' do
       it "検索ワードをタイトルに含み、かつステータスに完全一致するタスクが絞り込まれる" do
         # toとnot_toのマッチャを使って検索されたものとされなかったものの両方を確認する
-        expect(Task.search_title('first').search_status(0)).to include(task1)
-        expect(Task.search_title('first').search_status(0)).not_to include(task2)
+        result = Task.search_title('first').search_status(0)
+        expect(result).to include(task1)
+        expect(result).not_to include(task2)
         # 検索されたテストデータの数を確認する
-        expect(Task.search_title('first').search_status(0).size).to eq 1
+        expect(result.size).to eq 1
       end
     end
   end

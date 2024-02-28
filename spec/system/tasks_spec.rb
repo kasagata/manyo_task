@@ -110,13 +110,13 @@ RSpec.describe 'タスク管理機能', type: :system do
   end
 
   describe '詳細表示機能' do
-     context '任意のタスク詳細画面に遷移した場合' do
-       it 'そのタスクの内容が表示される' do
+    context '任意のタスク詳細画面に遷移した場合' do
+      it 'そのタスクの内容が表示される' do
         # テストで使用するためのタスクを登録
         task = FactoryBot.create(:task)
         visit task_path(task)
         expect(page).to have_content '書類作成'
-       end
-     end
+      end
+    end
   end
 end

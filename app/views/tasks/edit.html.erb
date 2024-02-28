@@ -20,19 +20,18 @@
   </div>
 
   <div class="field">
-  <%= f.label :deadline_on %><br>
-  <%= f.date_field :deadline_on %>
+    <%= f.label :deadline_on %><br>
+    <%= f.date_field :deadline_on %>
   </div>
 
   <div class="field">
-  <%= f.label :priority %><br>
-  <%= f.select :priority, Task.priorities_i18n.invert, { include_blank: true} %>
-
+    <%= f.label :priority %><br>
+    <%= f.select :priority, Task.priorities_i18n.invert, { include_blank: true} %>
   </div>
 
   <div class="field">
-  <%= f.label :status %><br>
-  <%= f.select :status, Task.statuses_i18n.invert, { include_blank: true} %>
+    <%= f.label :status %><br>
+    <%= f.select :status, Task.statuses_i18n.invert, { include_blank: true} %>
   </div>
 
   <div class="actions", id:"update-task">

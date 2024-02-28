@@ -1,7 +1,7 @@
 <h1><%= t('.title') %></h1>
 
 <%= form_with(scope: :search, url: tasks_path, method: :get, local: true) do |f| %>
- <div class="field">
+  <div class="field">
     <%= f.label t("activerecord.attributes.task.status") %><br>
     <%= f.select :status, Task.statuses_i18n.invert, { include_blank: true} %>
   </div>
