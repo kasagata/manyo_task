@@ -23,4 +23,38 @@ RSpec.describe 'タスクモデル機能', type: :model do
       end
     end
   end
+
+  describe '検索機能' do
+    let!(:task1) { FactoryBot.create(:task, title: 'first_task', deadline_on: '2022-02-18', priority: 1, status: 0) }
+    let!(:task2) { FactoryBot.create(:task, title: 'second_task', deadline_on: '2022-02-17', priority: 2, status: 1) }
+    let!(:task3) { FactoryBot.create(:task, title: 'third_task', deadline_on: '2022-02-16', priority: 0, status: 2) }
+    context 'scopeメソッドでタイトルのあいまい検索をした場合' do
+      it "検索ワードを含むタスクが絞り込まれる" do
+        # toとnot_toのマッチャを使って検索されたものとされなかったものの両方を確認する
+        expect(Task.search_title('first')).to include(task1)
+        expect(Task.search_title('first')).not_to include(task2)
+        # 検索されたテストデータの数を確認する
+        expect(Task.search_title('first').size).to eq 1
+
+      end
+    end
+    context 'scopeメソッドでステータス検索をした場合' do
+      it "ステータスに完全一致するタスクが絞り込まれる" do
+        # toとnot_toのマッチャを使って検索されたものとされなかったものの両方を確認する
+        expect(Task.search_status(0)).to include(task1)
+        expect(Task.search_status(0)).not_to include(task2)
+        # 検索されたテストデータの数を確認する
+        expect(Task.search_status(0).size).to eq 1
+      end
+    end
+    context 'scopeメソッドでタイトルのあいまい検索とステータス検索をした場合' do
+      it "検索ワードをタイトルに含み、かつステータスに完全一致するタスクが絞り込まれる" do
+        # toとnot_toのマッチャを使って検索されたものとされなかったものの両方を確認する
+        expect(Task.search_title('first').search_status(0)).to include(task1)
+        expect(Task.search_title('first').search_status(0)).not_to include(task2)
+        # 検索されたテストデータの数を確認する
+        expect(Task.search_title('first').search_status(0).size).to eq 1
+      end
+    end
+  end
 end
