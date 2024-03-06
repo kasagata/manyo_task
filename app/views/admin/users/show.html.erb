@@ -1,7 +1,7 @@
 <h1><%= t('.title') %></h1>
 <p><b><%= t('activerecord.attributes.user.name') %>:</b> <%= @user.name %></p>
 <p><b><%= t('activerecord.attributes.user.email') %>:</b> <%= @user.email %></p>
-<p><b><%= t('activerecord.attributes.user.admin') %>:</b> <%= @user.admin %></p>
+<p><b><%= t('activerecord.attributes.user.admin') %>:</b> <%= @user.admin ? t('helpers.boolean.true') : t('helpers.boolean.false')  %></p>
 
 <table>
   <thead>
