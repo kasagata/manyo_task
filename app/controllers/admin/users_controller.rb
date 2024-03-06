@@ -1,7 +1,7 @@
 class Admin::UsersController < ApplicationController
-  before_action :set_user, only: [:show, :edit, :update, :destroy]
-  before_action :admin_required, only: [:index, :edit, :show, :new]
   skip_before_action :logout_required
+  before_action :admin_required, only: [:index, :edit, :show, :new]
+  before_action :set_user, only: [:show, :edit, :update, :destroy]
 
   def index
     @users = User.eager_load(:tasks)
@@ -36,11 +36,11 @@ class Admin::UsersController < ApplicationController
   end
 
   def destroy
-  if @user.destroy
-    redirect_to admin_users_path, notice: t('.destroyed')
-  else
-    @users = User.all
-    render :index
+    if @user.destroy
+      redirect_to admin_users_path, notice: t('.destroyed')
+    else
+      @users = User.all
+      render :index
   end
 
   end

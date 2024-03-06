@@ -1,7 +1,8 @@
 class UsersController < ApplicationController
-  before_action :set_user, only: [:show, :edit, :update, :destroy]
-  before_action :logout_required, only:[:new]
   skip_before_action :login_required, only: [:new, :create]
+  before_action :logout_required, only:[:new]
+  before_action :set_user, only: [:show, :edit, :update, :destroy]
+  before_action :access_check, only: [:show, :edit]
 
   def new
     @user = User.new
@@ -18,9 +19,6 @@ class UsersController < ApplicationController
   end
 
   def show
-    if @user.nil? || @user != current_user
-      redirect_to tasks_path, notice: t('.not_access')
-    end
   end
 
   def edit
@@ -52,4 +50,11 @@ class UsersController < ApplicationController
   def logout_required
     redirect_to tasks_path, notice: t('notice.logout_required') if current_user.present?
   end
+
+  def access_check
+    if @user.nil? || @user != current_user
+      redirect_to tasks_path, notice: t('.not_access')
+    end
+  end
+
 end

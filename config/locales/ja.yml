@@ -71,11 +71,11 @@ ja:
     destroy:
       destroyed: タスクを削除しました
   users:
+    not_access: アクセス権限がありません
     new:
       title: アカウント登録ページ
     show:
       title: アカウント詳細ページ
-      not_access: アクセス権限がありません
     edit:
       title: アカウント編集ページ
     create:

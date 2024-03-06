@@ -1,8 +1,8 @@
 class TasksController < ApplicationController
+  skip_before_action :logout_required
   before_action :set_task, only: %i[ show edit update destroy ]
   before_action :set_user, only: %i[ index new create]
   before_action :access_check, only: %i[ show edit]
-  skip_before_action :logout_required
   
   def index
     page = params[:page]
