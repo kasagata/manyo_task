@@ -1,17 +1,19 @@
 class TasksController < ApplicationController
   before_action :set_task, only: %i[ show edit update destroy ]
+  before_action :set_user, only: %i[ index new create]
+  skip_before_action :logout_required
   
   def index
     page = params[:page]
     #ソート処理
     if params[:sort_deadline_on]
-      @tasks = Task.sort_deadline_on.page(page)
+      @tasks = @user.tasks.sort_deadline_on.page(page)
     elsif params[:sort_priority]
-      @tasks = Task.sort_priority.page(page)
+      @tasks = @user.tasks.sort_priority.page(page)
     else
     #検索処理
       @search_params = task_search_params
-      @tasks = Task.search(@search_params).order(created_at: :desc).page(page)
+      @tasks = @user.tasks.search(@search_params).order(created_at: :desc).page(page)
     end
   end
 
@@ -21,6 +23,7 @@ class TasksController < ApplicationController
 
   def create
     @task = Task.new(task_params)
+    @task.user = @user
     if @task.save
       redirect_to tasks_path, notice: t('.created')
     else
@@ -29,6 +32,7 @@ class TasksController < ApplicationController
   end
 
   def show
+    redirect_to tasks_path, notice: t('.not_access') unless @task.user == current_user
   end
 
   def edit
@@ -59,6 +63,10 @@ class TasksController < ApplicationController
 
   def task_search_params
     params.fetch(:search, {}).permit(:title, :status)
+  end
+
+  def set_user
+    @user = current_user
   end
 
 

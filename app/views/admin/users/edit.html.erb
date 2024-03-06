@@ -1,0 +1,37 @@
+<h1><%= t('.title') %></h1>
+<% if @user.errors.any? %>
+  <div class="error_explanation">
+    <h2>アカウントの更新に失敗しました</h2>
+    <ul>
+      <% @user.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+    </ul>
+  </div>
+<% end %>
+<%= form_with(model: @user, url: admin_user_path(@user), local: true, method: :patch) do |f| %>
+    <div class="field">
+      <%= f.label :name %><br>
+      <%= f.text_field :name %>
+    </div>
+    <div class="field">
+      <%= f.label :email %><br>
+      <%= f.email_field :email %>
+    </div>
+    <div class="field">
+      <%= f.label :password %><br>
+      <%= f.password_field :password %>
+    </div>
+    <div class="field">
+      <%= f.label :password_confirmation %><br>
+      <%= f.password_field :password_confirmation %>
+    </div>
+    <% if admin? %>
+      <%= f.label :admin %><br>
+      <%= f.check_box :admin %>
+    <% end %>
+    <div class="actions">
+      <%= f.submit id: 'update-user' %>
+    </div>
+  <% end %>
+<%= link_to t('common.back') ,admin_users_path, id: "back" %>
