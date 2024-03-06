@@ -2,7 +2,7 @@ class UsersController < ApplicationController
   skip_before_action :login_required, only: [:new, :create]
   before_action :logout_required, only:[:new]
   before_action :set_user, only: [:show, :edit, :update, :destroy]
-  before_action :access_check, only: [:show, :edit]
+  before_action :access_check, only: [:show, :edit, :update, :destroy]
 
   def new
     @user = User.new
