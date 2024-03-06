@@ -1,6 +1,7 @@
 class TasksController < ApplicationController
   before_action :set_task, only: %i[ show edit update destroy ]
   before_action :set_user, only: %i[ index new create]
+  before_action :access_check, only: %i[ show edit]
   skip_before_action :logout_required
   
   def index
@@ -32,7 +33,6 @@ class TasksController < ApplicationController
   end
 
   def show
-    redirect_to tasks_path, notice: t('.not_access') unless @task.user == current_user
   end
 
   def edit
@@ -54,7 +54,7 @@ class TasksController < ApplicationController
   private
 
   def set_task
-    @task = Task.find(params[:id])
+    @task = Task.find_by(id: params[:id])
   end
 
   def task_params
@@ -69,5 +69,9 @@ class TasksController < ApplicationController
     @user = current_user
   end
 
-
+  def access_check
+    if @task.nil? || @task.user != current_user
+      redirect_to tasks_path, notice: t('.not_access')
+    end
+  end
 end

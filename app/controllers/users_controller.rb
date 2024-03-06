@@ -1,5 +1,4 @@
 class UsersController < ApplicationController
-  before_action :correct_user, only: [:show]
   before_action :set_user, only: [:show, :edit, :update, :destroy]
   before_action :logout_required, only:[:new]
   skip_before_action :login_required, only: [:new, :create]
@@ -19,7 +18,9 @@ class UsersController < ApplicationController
   end
 
   def show
-    redirect_to tasks_path, notice: t('.not_access') unless @user == current_user
+    if @user.nil? || @user != current_user
+      redirect_to tasks_path, notice: t('.not_access')
+    end
   end
 
   def edit
@@ -41,16 +42,11 @@ class UsersController < ApplicationController
   private
 
   def set_user
-    @user = User.find(params[:id])
+    @user = User.find_by(id: params[:id])
   end
 
   def user_params
     params.require(:user).permit(:name, :email, :password, :password_confirmation)
-  end
-
-  def correct_user
-    set_user
-    redirect_to current_user unless current_user?(@user)
   end
   
   def logout_required

@@ -55,13 +55,13 @@ ja:
     users_index: ユーザ一覧
     add_user: ユーザを登録する
   tasks:
+    not_access: アクセス権限がありません
     index:
       title: タスク一覧ページ
     new:
       title: タスク登録ページ
     show:
       title: タスク詳細ページ
-      not_access: アクセス権限がありません
     edit:
       title: タスク編集ページ
     create:
@@ -94,6 +94,12 @@ ja:
         title: ユーザ詳細ページ
       edit:
         title: ユーザ編集ページ
+      create:
+        created: ユーザを登録しました
+      update:
+        updated: ユーザを更新しました
+      destroy:
+        destroyed: ユーザを削除しました
   sessions:
     new:
       title: ログインページ
