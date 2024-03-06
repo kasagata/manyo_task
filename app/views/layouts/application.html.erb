@@ -11,9 +11,21 @@
 
   <body>
     <ul>
+    <% if logged_in? %>
+      <% if admin? %>
+        <li><%= link_to t('common.users_index'), admin_users_path, id:"users-index" %></li>
+        <li><%= link_to t('common.add_user'), new_admin_user_path, id:"add-user" %></li>
+      <% end %>
       <li><%= link_to t('common.tasks_index'), root_path, id:"tasks-index" %></li>
       <li><%= link_to t('common.new_task'), new_task_path, id:"new-task" %></li>
+      <li><%= link_to 'アカウント設定', user_path(current_user.id), method: :get, id:"account-setting" %></li>
+      <li><%= link_to 'ログアウト', session_path(current_user.id), method: :delete, id:"sign-out" %></li>
+      <% else %>
+        <li><%= link_to 'アカウント登録', new_user_path, method: :get, id: "sign-up" %></li>
+        <li><%= link_to 'ログイン', new_session_path, method: :get, id: "sign-in" %></li>
+      <% end %>
     </ul>
+
     <% flash.each do |key, value| %>
       <%= content_tag(:div, value, class: "#{key}") %>
     <% end %>

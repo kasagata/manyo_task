@@ -1,0 +1,13 @@
+<h1><%= t('.title') %></h1>
+<% if @user.errors.any? %>
+  <div class="error_explanation">
+    <h2>アカウントの更新に失敗しました</h2>
+    <ul>
+      <% @user.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+    </ul>
+  </div>
+<% end %>
+<%= render 'form', user: @user, submit_user_id: 'update-user' %>
+<%= link_to t('common.back') ,user_path, id: "back" %>
