@@ -1,7 +1,7 @@
 class TasksController < ApplicationController
   skip_before_action :logout_required
   before_action :set_task, only: %i[ show edit update destroy ]
-  before_action :set_user, only: %i[ index new create]
+  before_action :set_user, only: %i[ index new create edit]
   before_action :access_check, only: %i[ show edit]
   
   def index
@@ -14,7 +14,11 @@ class TasksController < ApplicationController
     else
     #検索処理
       @search_params = task_search_params
-      @tasks = @user.tasks.search(@search_params).order(created_at: :desc).page(page)
+      if @search_params[:label].present?
+        @tasks = @user.tasks.joins(:labels).where(labels: { id: @search_params[:label] }).order(created_at: :desc).page(page)
+      else
+        @tasks = @user.tasks.search(@search_params).order(created_at: :desc).page(page)
+      end
     end
   end
 
@@ -58,11 +62,11 @@ class TasksController < ApplicationController
   end
 
   def task_params
-    params.require(:task).permit(:title, :content, :deadline_on, :priority, :status)
+    params.require(:task).permit(:title, :content, :deadline_on, :priority, :status, { label_ids: [] })
   end
 
   def task_search_params
-    params.fetch(:search, {}).permit(:title, :status)
+    params.fetch(:search, {}).permit(:title, :status, :label)
   end
 
   def set_user

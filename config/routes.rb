@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
   root 'tasks#index'
   resources :tasks
+  resources :labels
   resources :users
   namespace :admin do
     resources :users

@@ -1,6 +1,6 @@
 <h1><%= t('.title') %></h1>
 <% if @task.errors.any? %>
-<div id="error_explanation">
+<div id="error_explanation alert alert-danger">
   <ul>
     <% @task.errors.full_messages.each do |message| %>
       <li><%= message %></li>

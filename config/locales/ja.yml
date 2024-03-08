@@ -11,12 +11,15 @@ ja:
         deadline_on: 終了期限
         priority: 優先度
         status: ステータス
+        labels: ラベル
       user:
         name: 名前
         email: メールアドレス
         password: パスワード
         password_confirmation: パスワード（確認）
         admin: 管理者権限
+      label: 
+        name: 名前
   enums:
     task:
       priority:
@@ -51,6 +54,8 @@ ja:
     search: 検索
     tasks_index: タスク一覧
     new_task: タスクを登録する
+    labels_index: ラベル一覧
+    new_label: ラベルを登録する
     confirm_destroy: 本当に削除してもよろしいですか？
     users_index: ユーザ一覧
     add_user: ユーザを登録する
@@ -111,3 +116,16 @@ ja:
     login_required: ログインしてください
     logout_required: ログアウトしてください
     admin_required: 管理者以外アクセスできません
+  labels:
+    index:
+      title: ラベル一覧ページ
+    new:
+      title: ラベル登録ページ
+    edit:
+      title: ラベル編集ページ
+    create:
+      created: ラベルを登録しました
+    update:
+      updated: ラベルを更新しました
+    destroy:
+      destroyed: ラベルを削除しました

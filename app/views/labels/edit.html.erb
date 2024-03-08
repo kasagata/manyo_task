@@ -1,0 +1,12 @@
+<h1><%= t('.title') %></h1>
+<% if @label.errors.any? %>
+<div id="error_explanation alert alert-danger">
+  <ul>
+    <% @label.errors.full_messages.each do |message| %>
+      <li><%= message %></li>
+    <% end %>
+  </ul>
+</div>
+<% end %>
+<%= render 'form', label: @label, submit_label_id: 'update-label' %>  
+<%= link_to t('common.back'), labels_path, id:"back" %>

@@ -1,0 +1,21 @@
+<h1><%= t('.title') %></h1>
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col"><%= t("activerecord.attributes.label.name") %></th>
+      <th scope="col"><%= 'タスク数' %></th>
+      <th scope="col"></th>
+      <th scope="col"></th>
+      </tr>
+  </thead>
+  <tbody>
+    <% @labels.each do |label| %>
+      <tr>
+        <td scope="row"><%= label.name %></td>
+        <td scope="row"><%= label.tasks.size %></td>
+        <td scope="row"><%= link_to t('common.edit'), edit_label_path(label), class:"edit-label" %></td>
+        <td scope="row"><%= link_to t('common.destroy'), label, class:"destroy-label", method: :delete, data: { confirm: t('common.confirm_destroy') } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

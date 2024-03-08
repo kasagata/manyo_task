@@ -1,0 +1,12 @@
+<div class='container p-2'>
+  <%= form_with(model: @label, local: true) do |f| %>
+      <div class="form-group">
+      <%= f.label :name %><br>
+      <%= f.text_field :name, class:"form-control" %>
+      </div>
+  
+      <div class="actions">
+      <%= f.submit id: submit_label_id, class:"btn btn-primary" %>
+      </div>
+  <% end %>
+</div>
