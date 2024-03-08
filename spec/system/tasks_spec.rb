@@ -1,6 +1,13 @@
 require 'rails_helper'
 
 RSpec.describe 'タスク管理機能', type: :system do
+  let!(:user) { FactoryBot.create(:user)}
+  before do
+    visit new_session_path
+    fill_in 'メールアドレス', with: user.email
+    fill_in 'パスワード', with: user.password
+    click_button 'ログイン'
+  end
   describe '登録機能' do
     context 'タスクを登録した場合' do
       it '登録したタスクが表示される' do
@@ -21,11 +28,13 @@ RSpec.describe 'タスク管理機能', type: :system do
     end
   end
 
-  describe '一覧表示機能' do
-    let!(:task1) { FactoryBot.create(:task, title: 'first_task', created_at:'2022-02-16', deadline_on: '2022-02-16', priority: 1, status: 0) }
-    let!(:task2) { FactoryBot.create(:task, title: 'second_task', created_at:'2022-02-17', deadline_on: '2022-02-17', priority: 2, status: 1) }
-    let!(:task3) { FactoryBot.create(:task, title: 'third_task', created_at:'2022-02-18', deadline_on: '2022-02-18', priority: 0, status: 2) }
+  describe '一覧表示機能' do    
     before do
+      label = FactoryBot.create(:label, name: "label1", user: user)
+      task1 = FactoryBot.create(:task, title: 'first_task', created_at:'2022-02-16', deadline_on: '2022-02-16', priority: 1, status: 0, user: user) 
+      task2 = FactoryBot.create(:task, title: 'second_task', created_at:'2022-02-17', deadline_on: '2022-02-17', priority: 2, status: 1, user: user) 
+      task3 = FactoryBot.create(:task, title: 'third_task', created_at:'2022-02-18', deadline_on: '2022-02-18', priority: 0, status: 2, user: user) 
+      label.tasks << task1
       visit tasks_path
     end
     context '一覧画面に遷移した場合' do
@@ -38,7 +47,7 @@ RSpec.describe 'タスク管理機能', type: :system do
     end
     context '新たにタスクを作成した場合' do
       it '新しいタスクが一番上に表示される' do
-        FactoryBot.create(:task, title: "AAATask", deadline_on: '2022-02-16', priority: 0, status: 2)
+        FactoryBot.create(:task, title: "AAATask", deadline_on: '2022-02-16', priority: 0, status: 2, user: user)
         visit tasks_path
         task_list = all('tbody tr')
         expect(task_list[0]).to have_content 'AAATask'
@@ -106,6 +115,20 @@ RSpec.describe 'タスク管理機能', type: :system do
           end
         end
       end
+      context 'ラベルで検索をした場合' do
+        it "そのラベルの付いたタスクがすべて表示される" do
+          sleep 1
+          select 'label1', from: "search_label"
+          click_button "検索"
+          sleep 1
+          task_list = all('tbody tr')
+          # toとnot_toのマッチャを使って表示されるものとされないものの両方を確認する
+          task_list.each do |task|
+            expect(task).to have_content 'first_task'
+            expect(task).to_not have_content 'second_task'
+          end
+        end
+      end
     end
   end
 
@@ -113,7 +136,7 @@ RSpec.describe 'タスク管理機能', type: :system do
     context '任意のタスク詳細画面に遷移した場合' do
       it 'そのタスクの内容が表示される' do
         # テストで使用するためのタスクを登録
-        task = FactoryBot.create(:task)
+        task = FactoryBot.create(:task, user: user) 
         visit task_path(task)
         expect(page).to have_content '書類作成'
       end
