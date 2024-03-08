@@ -4,31 +4,41 @@
     <title>CdpWebManyoTask</title>
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
-
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
     <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
   </head>
 
   <body>
-    <ul>
-    <% if logged_in? %>
-      <% if admin? %>
-        <li><%= link_to t('common.users_index'), admin_users_path, id:"users-index" %></li>
-        <li><%= link_to t('common.add_user'), new_admin_user_path, id:"add-user" %></li>
-      <% end %>
-      <li><%= link_to t('common.tasks_index'), root_path, id:"tasks-index" %></li>
-      <li><%= link_to t('common.new_task'), new_task_path, id:"new-task" %></li>
-      <li><%= link_to 'アカウント設定', user_path(current_user.id), method: :get, id:"account-setting" %></li>
-      <li><%= link_to 'ログアウト', session_path(current_user.id), method: :delete, id:"sign-out" %></li>
-      <% else %>
-        <li><%= link_to 'アカウント登録', new_user_path, method: :get, id: "sign-up" %></li>
-        <li><%= link_to 'ログイン', new_session_path, method: :get, id: "sign-in" %></li>
-      <% end %>
-    </ul>
-
+  <nav class="navbar navbar-expand-lg navbar-light bg-light flex">
+    <div class="collapse navbar-collapse flex-row-reverse" id="navbarNav">
+      <ul class="navbar-nav">
+        <% if logged_in? %>
+        <% if admin? %>
+          <%= link_to t('common.users_index'), admin_users_path, id:"users-index", class:"nav-link" %></a></li>
+          <li class="nav-item"><%= link_to t('common.add_user'), new_admin_user_path, id:"add-user", class:"nav-link" %></li>
+        <% end %>
+        <li class="nav-item"><%= link_to t('common.tasks_index'), root_path, id:"tasks-index", class:"nav-link" %></li>
+        <li class="nav-item"><%= link_to t('common.new_task'), new_task_path, id:"new-task", class:"nav-link" %></li>
+        <li class="nav-item"><%= link_to t('common.labels_index'), labels_path, id:"labels-index", class:"nav-link" %></li>
+        <li class="nav-item"><%= link_to t('common.new_label'), new_label_path, id:"new-label", class:"nav-link" %></li>
+        <li class="nav-item"><%= link_to 'アカウント設定', user_path(current_user.id), method: :get, id:"account-setting", class:"nav-link" %></li>
+        <li class="nav-item"><%= link_to 'ログアウト', session_path(current_user.id), method: :delete, id:"sign-out", class:"nav-link" %></li>
+        <% else %>
+          <li class="nav-item"><%= link_to 'アカウント登録', new_user_path, method: :get, id: "sign-up", class:"nav-link" %></li>
+          <li class="nav-item"><%= link_to 'ログイン', new_session_path, method: :get, id: "sign-in", class:"nav-link" %></li>
+        <% end %>
+      </ul>
+    </div>
+  </nav>
+  <div class='container p-5'>
     <% flash.each do |key, value| %>
-      <%= content_tag(:div, value, class: "#{key}") %>
+      <%= content_tag(:div, value, class: "#{key} alert alert-dark") %>
     <% end %>
     <%= yield %>
+  </div>
   </body>
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
 </html>

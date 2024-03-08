@@ -1,30 +1,42 @@
-<%= form_with(model: @task, local: true) do |f| %>
-  <div class="field">
-    <%= f.label :title %><br>
-    <%= f.text_field :title %>
-  </div>
+<div class='container p-2'>
+  <%= form_with(model: @task, local: true) do |f| %>
+    <div class="form-group">
+      <%= f.label :title %><br>
+      <%= f.text_field :title, class:"form-control"%>
+    </div>
 
-  <div class="field">
-    <%= f.label :content %><br>
-    <%= f.text_area :content %>
-  </div>
+    <div class="form-group">
+      <%= f.label :content %><br>
+      <%= f.text_area :content, class:"form-control" %>
+    </div>
 
-  <div class="field">
-    <%= f.label :deadline_on %><br>
-    <%= f.date_field :deadline_on %>
-  </div>
+    <div class="form-group">
+      <%= f.label :deadline_on %><br>
+      <%= f.date_field :deadline_on, class:"form-control" %>
+    </div>
 
-  <div class="field">
-    <%= f.label :priority %><br>
-    <%= f.select :priority, Task.priorities_i18n.invert, { include_blank: true} %>
-  </div>
+    <div class="form-group">
+      <%= f.label :priority %><br>
+      <%= f.select :priority, Task.priorities_i18n.invert, { include_blank: true}, class:"form-control" %>
+    </div>
 
-  <div class="field">
-    <%= f.label :status %><br>
-    <%= f.select :status, Task.statuses_i18n.invert, { include_blank: true} %>
-  </div>
+    <div class="form-group">
+      <%= f.label :status %><br>
+      <%= f.select :status, Task.statuses_i18n.invert, { include_blank: true}, class:"form-control" %>
+    </div>
 
-  <div class="actions">
-    <%= f.submit t('helpers.submit.create'), id: submit_task_id %>
-  </div>
-<% end %>
+    <div class="form-group">
+      <%= f.label "ラベル" %><br>
+      <div class="form-group form-check">
+        <% @user.labels.each do |label| %>
+          <%= f.check_box :label_ids, { multiple: true, include_hidden: false }, label[:id], class:"form-check-input" %>
+          <%= f.label label.name, class:"form-check-label"%>
+        <% end %>
+      </div>
+    </div>
+
+    <div class="actions">
+      <%= f.submit t('helpers.submit.create'), id: submit_task_id, class:"btn btn-primary" %>
+    </div>
+  <% end %>
+</div>

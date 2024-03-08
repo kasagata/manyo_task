@@ -29,5 +29,12 @@
   <%= @task.status_i18n %>
 </p>
 
+<p>
+  <strong><%= 'ラベル' %>:</strong>
+  <% @task.labels.each do |label| %>
+    <%= label.name %>
+  <% end %>
+</p>
+
 <%= link_to t('common.edit'), edit_task_path(@task), id:"edit-task" %> |
 <%= link_to t('common.back'), tasks_path, id:"back" %>
